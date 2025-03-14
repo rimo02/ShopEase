@@ -61,10 +61,10 @@ const cartSlice = createSlice({
         },
         calculateTotalPrice: (state) => {
             state.totalPrice = state.cartItems.reduce((total, item) => {
-              const { price, qty } = item;
-              return total + price * qty;
+                const { price, qty } = item;
+                return total + price * qty;
             }, 0);
-          },
+        },
         calculateTotalQuantity: (state) => {
             state.totalQuantity = state.cartItems.reduce((total, item) => {
                 const { qty } = item

@@ -8,17 +8,16 @@ function Layout() {
     return (
         <Box
             sx={{
-                width: '100vw',
+                width: '100%',
                 minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
                 overflowX: 'hidden',
-                bgcolor:"#EDEDEDFF"
+                bgcolor:"#EDEDEDFF",
             }}
         >
             <Header />
-            <Box sx={{ flexGrow: 1, width: '100%', display: 'flex', justifyContent: 'center', }}>
+            <Box sx={{ flexGrow: 1, width: '100%' }}>
                 <Outlet />
             </Box>
             <Footer />

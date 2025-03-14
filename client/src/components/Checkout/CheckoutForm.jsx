@@ -6,12 +6,15 @@ import {
 } from '@stripe/react-stripe-js';
 import { Box, Button, Typography, CircularProgress } from '@mui/material'
 import { toast } from 'react-toastify'
+import { calculateTotalQuantity, clearCart } from '../../redux/slice/cartSlice';
+import { useDispatch } from 'react-redux';
 
 function CheckoutForm({ clientSecret }) {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,6 +51,8 @@ function CheckoutForm({ clientSecret }) {
         autoClose: 3000,
         theme: "light"
       });
+      dispatch(clearCart())
+      dispatch(calculateTotalQuantity())
     }
 
     setLoading(false);

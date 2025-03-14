@@ -8,13 +8,13 @@ import Typography from '@mui/material/Typography';
 import { useMediaQuery } from '@mui/material'
 import { addToCart } from '../../redux/slice/cartSlice'
 import { useDispatch } from 'react-redux'
-import { toast } from 'react-toastify';
-import {calculateTotalQuantity} from '../../redux/slice/cartSlice' 
+import { toast, ToastContainer } from 'react-toastify';
+import { calculateTotalQuantity } from '../../redux/slice/cartSlice'
 
 export default function MediaCard({ name, description, url, discount, price, categories, id }) {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
-    const isMediumScreen = useMediaQuery('(max-width:2200px)');
     const dispatch = useDispatch()
+    const isMediumScreen = useMediaQuery('(max-width:2200px)');
     let nameLimit = isSmallScreen ? 15 : isMediumScreen ? 20 : 25;
     let descLimit = isSmallScreen ? 20 : isMediumScreen ? 30 : 40;
 
@@ -29,19 +29,15 @@ export default function MediaCard({ name, description, url, discount, price, cat
         dispatch(calculateTotalQuantity());
         toast.success("Item Added to Cart!", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1000,
             theme: "light"
         });
     };
 
     return (
-        <Card sx={{ maxWidth: 285, maxHeight: '100%', boxShadow: 2 }}>
-            <CardMedia
-                sx={{ height: 160 }}
-                image={url}
-                title={name}
-            />
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+        <Card sx={{ width: 260, height: 380, boxShadow: 2, display: 'flex', flexDirection: 'column' }}>
+            <CardMedia sx={{ height: 160 }} image={url} title={name} />
+            <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <Typography gutterBottom variant="h5" component="div">
                     {truncateText(name.toLowerCase(), nameLimit)}
                 </Typography>
@@ -51,13 +47,14 @@ export default function MediaCard({ name, description, url, discount, price, cat
                 <Typography variant="h6" sx={{ marginTop: 2 }}>
                     Price: ${price} {discount && <span style={{ color: 'orange' }}>({discount}% off)</span>}
                 </Typography>
-                <Typography variant="h10    " sx={{ marginTop: 2 }}>
+                <Typography variant="body2" sx={{ marginTop: 2 }}>
                     <strong>Categories</strong>: {categories.join(" ")}
                 </Typography>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ justifyContent: 'space-between' }}>
                 <Button size="small" onClick={addtoCart}>Add to Cart</Button>
                 <Button size="small">View Details</Button>
+                <ToastContainer />
             </CardActions>
         </Card>
     );

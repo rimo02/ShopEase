@@ -75,30 +75,79 @@ app.post('/add-product', upload.single('image'), async (req, res) => {
 
 app.get('/products', async (req, res) => {
     try {
-        const snapshot = await db.collection("products").get();
+        let { page, limit, minPrice, maxPrice, categories } = req.query;
+
+        page = parseInt(page) || 1;
+        limit = parseInt(limit) || 10;
+        minPrice = parseInt(minPrice) || 0;
+        maxPrice = parseInt(maxPrice) || Number.MAX_SAFE_INTEGER;
+
+        const offset = (page - 1) * limit;
+
+        let query = db.collection("products");
+
+        query = query.where("price", ">=", minPrice);
+        if (maxPrice < Number.MAX_SAFE_INTEGER) {
+            query = query.where("price", "<=", maxPrice);
+        }
+
+        if (categories && categories.length > 0) {
+            const catList = categories.split(",");
+            if (catList.length > 0) {
+                query = query.where("categories", "array-contains-any", catList);
+            }
+        }
+
+        query = query.orderBy("price").orderBy("createdAt", "desc");
+
+        const countSnapshot = await query.count().get();
+        const totalCount = countSnapshot.data().count;
+        const totalPages = Math.ceil(totalCount / limit);
+
+        let paginatedQuery = query;
+
+        if (offset > 0) {
+            const snapshot = await query.limit(offset).get();
+            const lastVisible = snapshot.docs[snapshot.docs.length - 1];
+
+            if (lastVisible) {
+                paginatedQuery = query.startAfter(lastVisible);
+            }
+        }
+
+        const snapshot = await paginatedQuery.limit(limit).get();
         const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        res.status(200).json(products);
+
+        res.status(200).json({
+            products,
+            totalPages,
+            currentPage: page,
+            totalCount
+        });
+
     } catch (error) {
+        console.error("Error fetching products:", error.message);
         res.status(500).json({ error: error.message });
     }
 });
 
 
+
 app.post('/create-intent', async (req, res) => {
     try {
-      const { amount, currency } = req.body;
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount * 100,
-        currency: currency || 'usd',
-        payment_method_types: ["card"],
-      });
-      
-      res.json({ client_secret: paymentIntent.client_secret });
+        const { amount, currency } = req.body;
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: amount * 100,
+            currency: currency || 'usd',
+            payment_method_types: ["card"],
+        });
+
+        res.json({ client_secret: paymentIntent.client_secret });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ error: error.message });
     }
-  });
-  
+});
+
 
 module.exports = server;
