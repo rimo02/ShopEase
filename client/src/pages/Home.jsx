@@ -38,7 +38,7 @@ export default function Home() {
                     queryParams.append('categories', selectedCategories);
                 }
 
-                const response = await fetch(`http://localhost:3000/products?${queryParams}`);
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/products?${queryParams}`);
                 if (!response.ok) throw new Error('Failed to fetch products');
 
                 const data = await response.json();

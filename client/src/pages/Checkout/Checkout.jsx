@@ -15,7 +15,7 @@ function Checkout() {
   useEffect(() => {
     async function fetchClientSecret() {
       try {
-        const res = await fetch('http://localhost:3000/create-intent', {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/create-intent`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: totalAmount, currency: 'usd' }),

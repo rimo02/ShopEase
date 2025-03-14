@@ -35,7 +35,7 @@ function CheckoutForm({ clientSecret }) {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: "http://localhost:5173"
+        return_url: `${import.meta.env.VITE_CLIENT_URL}`
       },
     });
 
