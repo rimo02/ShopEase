@@ -5,7 +5,7 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import { Box, Button, Typography, CircularProgress } from '@mui/material'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { calculateTotalQuantity, clearCart } from '../../redux/slice/cartSlice';
 import { useDispatch } from 'react-redux';
 
@@ -30,31 +30,40 @@ function CheckoutForm({ clientSecret }) {
       setLoading(false);
       return;
     }
+    try {
+      const { paymentIntent, error } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        redirect: 'if_required',
+      });
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: `${import.meta.env.VITE_CLIENT_URL}`
-      },
-    });
-
-    if (error) {
-      toast.error(`${error.message}`, {
+      if (error) {
+        toast.error(`${error.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "light"
+        });
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        toast.success("Payment successful!", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "light"
+        }
+        );
+        dispatch(clearCart());
+        dispatch(calculateTotalQuantity());
+        setTimeout(() => {
+          window.location.href = `${import.meta.env.VITE_CLIENT_URL}`;
+        }, 3500);
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      toast.error("An unexpected error occurred", {
         position: "top-right",
         autoClose: 3000,
         theme: "light"
       });
-    } else {
-      toast.success("Payment successful!", {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "light"
-      });
-      dispatch(clearCart())
-      dispatch(calculateTotalQuantity())
     }
-
     setLoading(false);
   };
 
@@ -91,6 +100,7 @@ function CheckoutForm({ clientSecret }) {
             {errorMessage}
           </Typography>
         )}
+        <ToastContainer />
       </form>
     </Box>
   );
