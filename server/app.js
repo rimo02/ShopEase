@@ -52,8 +52,9 @@ const uploadImageToStorage = async (file) => {
 
 app.post('/add-product', upload.single('image'), async (req, res) => {
     try {
-        const { name, description, price, discount } = req.body;
-        if (!name || !price || !req.file) {
+        console.log(req.body)
+        const { name, description, price, discount,categories } = req.body;
+        if (!name || !price || !req.file || !categories) {
             return res.status(400).json({ error: "All required fields must be filled" });
         }
         const imgUrl = await uploadImageToStorage(req.file);
@@ -64,6 +65,7 @@ app.post('/add-product', upload.single('image'), async (req, res) => {
             discount: Number(discount) || 0,
             imgUrl,
             createdAt: new Date(),
+            categories:JSON.parse(categories),
         };
         const docRef = await db.collection("products").add(productData);
         res.status(201).json({ id: docRef.id, message: "Product added successfully" });

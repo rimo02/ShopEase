@@ -26,7 +26,7 @@ function CartCard({ name, url, price, id, qty }) {
         dispatch(calculateTotalQuantity());
     }
     const handleDelete = (id) => {
-        dispatch(removeFromCart({id}))
+        dispatch(removeFromCart({ id }))
         dispatch(calculateTotalQuantity());
     }
 
@@ -50,7 +50,7 @@ function CartCard({ name, url, price, id, qty }) {
             </CardContent>
             <CardActions sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: "100%" }}>
 
-                <IconButton onClick={()=>handleDelete(id)} color="gray">
+                <IconButton onClick={() => handleDelete(id)} color="gray">
                     <DeleteIcon />
                 </IconButton>
             </CardActions>

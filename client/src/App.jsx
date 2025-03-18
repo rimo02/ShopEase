@@ -12,7 +12,7 @@ import { RouterProvider } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Admin from './pages/Admin/Admin'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Navigate } from 'react-router-dom'
 import Cart from './components/Cart/Cart'
 import Checkout from './pages/Checkout/Checkout'
 
@@ -52,8 +52,20 @@ const router = createBrowserRouter([
           </AdminProtectedRoute>
         )
       },
-      { path: "/cart", element: <Cart /> },
-      { path: "/checkout", element: <Checkout /> }
+      {
+        path: "/cart", element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/checkout", element: (
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        )
+      }
 
     ]
   }

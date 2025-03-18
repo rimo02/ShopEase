@@ -12,11 +12,12 @@ export default function Home() {
         household: false,
         fashion: false,
         beauty: false,
+        accessories: false,
         priceRange: [0, 100000],
     });
     const [tempPriceRange, setTempPriceRange] = useState([0, 100000]);
     const [page, setPage] = useState(1);
-    const itemsPerPage = 25;
+    const itemsPerPage = 12;
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -43,6 +44,7 @@ export default function Home() {
 
                 const data = await response.json();
                 setProducts(data.products);
+                console.log(products)
                 setTotalPages(data.totalPages);
             } catch (err) {
                 setError(err.message);
@@ -87,13 +89,14 @@ export default function Home() {
     return (
         <Box maxWidth="100%" sx={{ display: "flex", mt: 4 }}>
             <Box sx={{ width: "25%" }}>
-                <Paper sx={{ width: "90%", p: 3, height: "fit-content", position: "sticky", top: 10, left: 0 }}>
+                <Paper sx={{ width: "100%", p: 5, height: "fit-content", position: "sticky", top: 10, left: 0 }}>
                     <Typography variant="h6" sx={{ mb: 2 }}>Filters</Typography>
                     <FormGroup>
                         <FormControlLabel control={<Checkbox name="electronics" checked={filters.electronics} onChange={handleItems} />} label="Electronics" />
                         <FormControlLabel control={<Checkbox name="household" checked={filters.household} onChange={handleItems} />} label="Household Essentials" />
                         <FormControlLabel control={<Checkbox name="fashion" checked={filters.fashion} onChange={handleItems} />} label="Fashion" />
                         <FormControlLabel control={<Checkbox name="beauty" checked={filters.beauty} onChange={handleItems} />} label="Health and Beauty" />
+                        <FormControlLabel control={<Checkbox name="accessories" checked={filters.accessories} onChange={handleItems} />} label="Accessories" />
                     </FormGroup>
                     <Typography variant="body1" sx={{ mt: 3 }}>Price Range</Typography>
                     <Slider

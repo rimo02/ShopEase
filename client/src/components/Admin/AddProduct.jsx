@@ -88,7 +88,7 @@ function AddProduct() {
                             <FormControlLabel control={<Checkbox name="household" checked={categories.includes("household")} onChange={handleCategoryChange} />} label="Household Essentials" />
                             <FormControlLabel control={<Checkbox name="fashion" checked={categories.includes("fashion")} onChange={handleCategoryChange} />} label="Fashion" />
                             <FormControlLabel control={<Checkbox name="beauty" checked={categories.includes("beauty")} onChange={handleCategoryChange} />} label="Health and Beauty" />
-                            <FormControlLabel control={<Checkbox name="clothing" checked={categories.includes("clothing")} onChange={handleCategoryChange} />} label="Clothing" />
+                            <FormControlLabel control={<Checkbox name="accessories" checked={categories.includes("accessories")} onChange={handleCategoryChange} />} label="Accessories" />
                         </FormGroup>
                     </Grid>
                     <Grid item xs={6}>

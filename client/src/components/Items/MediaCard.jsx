@@ -48,7 +48,8 @@ export default function MediaCard({ name, description, url, discount, price, cat
                     Price: ${price} {discount && <span style={{ color: 'orange' }}>({discount}% off)</span>}
                 </Typography>
                 <Typography variant="body2" sx={{ marginTop: 2 }}>
-                    <strong>Categories</strong>: {categories.join(" ")}
+                    {console.log(categories)}
+                    <strong>Categories</strong>: {categories.join(", ")}
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'space-between' }}>
