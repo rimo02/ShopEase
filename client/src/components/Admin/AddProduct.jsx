@@ -34,7 +34,7 @@ function AddProduct() {
         formData.append("categories", JSON.stringify(categories));
 
         try {
-            await axios.post("http://localhost:3000/add-product", formData, {
+            await axios.post(`${import.meta.env.VITE_SERVER_URL}/add-product`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             alert("Product added successfully!");
