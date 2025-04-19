@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { CircularProgress, Typography, Pagination, Box, Paper, FormGroup, FormControlLabel, Checkbox, Slider } from '@mui/material';
 import MediaCard from '../components/Items/MediaCard';
+import debounce from 'lodash.debounce';
 
 export default function Home() {
     const [products, setProducts] = useState([]);
@@ -19,8 +20,8 @@ export default function Home() {
     const [page, setPage] = useState(1);
     const itemsPerPage = 12;
 
-    useEffect(() => {
-        const fetchProducts = async () => {
+    const fetchedProducts = useCallback(
+        debounce(async (filters, page) => {
             setLoading(true);
             setError(null);
             try {
@@ -51,9 +52,11 @@ export default function Home() {
             } finally {
                 setLoading(false);
             }
-        };
-        fetchProducts();
-    }, [filters, page]);
+        }, 500), []);
+
+    useEffect(() => {
+        fetchedProducts(filters, page);
+    }, [filters, page, fetchedProducts]);
 
     const handleItems = (event) => {
         setFilters({ ...filters, [event.target.name]: event.target.checked });
@@ -89,7 +92,7 @@ export default function Home() {
     return (
         <Box maxWidth="100%" sx={{ display: "flex", mt: 4 }}>
             <Box sx={{ width: "25%" }}>
-                <Paper sx={{ width: "100%", p: 5, height: "fit-content", position: "sticky", top: 10, left: 0 }}>
+                <Paper sx={{ width: "20vw", p: 5, height: "fit-content", position: "sticky", top: 10, left: 0 }}>
                     <Typography variant="h6" sx={{ mb: 2 }}>Filters</Typography>
                     <FormGroup>
                         <FormControlLabel control={<Checkbox name="electronics" checked={filters.electronics} onChange={handleItems} />} label="Electronics" />
@@ -105,7 +108,7 @@ export default function Home() {
                         onChangeCommitted={handlePriceRangeCommitted}
                         valueLabelDisplay="auto"
                         min={0}
-                        max={100000}
+                        max={1000}
                         sx={{ width: '90%', mt: 1 }} />
                     <Typography variant="body2" sx={{ mt: 1 }}>
                         ${tempPriceRange[0]} - ${tempPriceRange[1]}

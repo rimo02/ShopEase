@@ -21,6 +21,7 @@
     "axios": "^1.8.2",
     "firebase": "^11.4.0",
     "jwt-decode": "^4.0.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
