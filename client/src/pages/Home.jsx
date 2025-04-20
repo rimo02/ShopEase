@@ -113,7 +113,7 @@ export default function Home() {
                         onChangeCommitted={handlePriceRangeCommitted}
                         valueLabelDisplay="auto"
                         min={0}
-                        max={1000}
+                        max={100000}
                         sx={{ width: '90%', mt: 1 }} />
                     <Typography variant="body2" sx={{ mt: 1 }}>
                         ${tempPriceRange[0]} - ${tempPriceRange[1]}
