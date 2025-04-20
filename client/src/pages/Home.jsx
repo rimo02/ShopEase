@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { CircularProgress, Typography, Pagination, Box, Paper, FormGroup, FormControlLabel, Checkbox, Slider } from '@mui/material';
 import MediaCard from '../components/Items/MediaCard';
 import debounce from 'lodash.debounce';
+import { useLocation } from 'react-router-dom'
 
 export default function Home() {
     const [products, setProducts] = useState([]);
@@ -19,9 +20,12 @@ export default function Home() {
     const [tempPriceRange, setTempPriceRange] = useState([0, 100000]);
     const [page, setPage] = useState(1);
     const itemsPerPage = 12;
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+    const searchQuery = searchParams.get('search') || "";
 
     const fetchedProducts = useCallback(
-        debounce(async (filters, page) => {
+        debounce(async (filters, page, searchQuery) => {
             setLoading(true);
             setError(null);
             try {
@@ -34,6 +38,7 @@ export default function Home() {
                     limit: itemsPerPage,
                     minPrice: filters.priceRange[0],
                     maxPrice: filters.priceRange[1],
+                    search: searchQuery
                 });
 
                 if (selectedCategories.length > 0) {
@@ -55,8 +60,8 @@ export default function Home() {
         }, 500), []);
 
     useEffect(() => {
-        fetchedProducts(filters, page);
-    }, [filters, page, fetchedProducts]);
+        fetchedProducts(filters, page, searchQuery);
+    }, [filters, page, fetchedProducts, searchQuery]);
 
     const handleItems = (event) => {
         setFilters({ ...filters, [event.target.name]: event.target.checked });

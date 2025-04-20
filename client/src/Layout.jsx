@@ -8,7 +8,7 @@ function Layout() {
     return (
         <Box
             sx={{
-                width: '100%',
+                width: '100vw',
                 minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',

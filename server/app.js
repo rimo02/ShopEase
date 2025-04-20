@@ -52,8 +52,7 @@ const uploadImageToStorage = async (file) => {
 
 app.post('/add-product', upload.single('image'), async (req, res) => {
     try {
-        console.log(req.body)
-        const { name, description, price, discount,categories } = req.body;
+        const { name, description, price, discount, categories } = req.body;
         if (!name || !price || !req.file || !categories) {
             return res.status(400).json({ error: "All required fields must be filled" });
         }
@@ -65,7 +64,7 @@ app.post('/add-product', upload.single('image'), async (req, res) => {
             discount: Number(discount) || 0,
             imgUrl,
             createdAt: new Date(),
-            categories:JSON.parse(categories),
+            categories: JSON.parse(categories),
         };
         const docRef = await db.collection("products").add(productData);
         res.status(201).json({ id: docRef.id, message: "Product added successfully" });
@@ -77,8 +76,7 @@ app.post('/add-product', upload.single('image'), async (req, res) => {
 
 app.get('/products', async (req, res) => {
     try {
-        let { page, limit, minPrice, maxPrice, categories } = req.query;
-
+        let { page, limit, minPrice, maxPrice, categories, search } = req.query;
         page = parseInt(page) || 1;
         limit = parseInt(limit) || 10;
         minPrice = parseInt(minPrice) || 0;
@@ -118,7 +116,16 @@ app.get('/products', async (req, res) => {
         }
 
         const snapshot = await paginatedQuery.limit(limit).get();
-        const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        var products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        if (search != "") {
+            const lowerSearch = search.toLowerCase();
+            products = products.filter(p =>
+                p.name.toLowerCase().includes(lowerSearch) ||
+                (p.description && p.description.toLowerCase().includes(lowerSearch))
+            );
+        }
+
 
         res.status(200).json({
             products,
