@@ -15,6 +15,7 @@ import { useEffect } from 'react'
 import { useNavigate,Navigate } from 'react-router-dom'
 import Cart from './components/Cart/Cart'
 import Checkout from './pages/Checkout/Checkout'
+import { FilterProvider } from './context/FilterContext'
 
 const ProtectedRoute = ({ children }) => {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
@@ -74,7 +75,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <FilterProvider>
+        <RouterProvider router={router} />
+      </FilterProvider>
     </Provider>
   )
 }

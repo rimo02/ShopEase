@@ -17,7 +17,7 @@ function Layout() {
             }}
         >
             <Header />
-            <Box sx={{ flexGrow: 1, width: '100%' }}>
+            <Box sx={{ flexGrow: 1, width: '100%',mt:5 }}>
                 <Outlet />
             </Box>
             <Footer />
