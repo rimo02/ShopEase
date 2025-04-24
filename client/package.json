@@ -19,6 +19,7 @@
     "@stripe/stripe-js": "^6.0.0",
     "@tailwindcss/vite": "^4.0.11",
     "axios": "^1.8.2",
+    "clsx": "^2.1.1",
     "firebase": "^11.4.0",
     "jwt-decode": "^4.0.0",
     "lodash.debounce": "^4.0.8",
@@ -28,6 +29,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.3.0",
     "react-toastify": "^11.0.5",
+    "tailwind-merge": "^3.2.0",
     "tailwindcss": "^4.0.11"
   },
   "devDependencies": {

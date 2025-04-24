@@ -16,6 +16,7 @@ import { useNavigate,Navigate } from 'react-router-dom'
 import Cart from './components/Cart/Cart'
 import Checkout from './pages/Checkout/Checkout'
 import { FilterProvider } from './context/FilterContext'
+import LandingPage from './pages/LandingPage'
 
 const ProtectedRoute = ({ children }) => {
   const isUserLoggedIn = useSelector((state) => state.auth.isUserLoggedIn);
@@ -40,7 +41,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/", element: < Home /> },
+      {path:"/",element:<LandingPage/>},
+      { path: "/home", element: < Home /> },
       { path: "/login", element: < LoginPage /> },
       { path: "/signup", element: < SignupPage /> },
       { path: "forgot", element: < ForgotPasswordPage /> },

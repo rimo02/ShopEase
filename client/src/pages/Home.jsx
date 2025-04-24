@@ -4,6 +4,7 @@ import MediaCard from '../components/Items/MediaCard';
 import debounce from 'lodash.debounce';
 import { useLocation } from 'react-router-dom'
 import { FilterContext } from '../context/FilterContext';
+import Animation from '../components/ui/Animation'
 
 export default function Home() {
     const [products, setProducts] = useState([]);
@@ -79,22 +80,36 @@ export default function Home() {
                 <Box sx={{
                     display: "flex", flexWrap: "wrap",
                     gap: 4,
-                    justifyContent:"center"
+                    justifyContent: "center",
+                    mt:2,
                 }}>
                     {products.map((product) => (
-                        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                            <MediaCard
-                                key={product.id}
-                                name={product.name}
-                                description={product.description}
-                                price={product.price}
-                                discount={product.discount}
-                                url={product.imgUrl}
-                                categories={product.categories}
-                                id={product.id}
-                            />
-                        </Box>
+                        <Animation key={product.id}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    transition: "transform 0.4s ease, box-shadow 0.4s ease",
+                                    "&:hover": {
+                                        transform: "translateY(-4px)",
+                                        boxShadow: 6,
+                                    },
+                                }}
+                            >
+                                <MediaCard
+                                    name={product.name}
+                                    description={product.description}
+                                    price={product.price}
+                                    discount={product.discount}
+                                    url={product.imgUrl}
+                                    categories={product.categories}
+                                    id={product.id}
+                                />
+                            </Box>
+                        </Animation>
                     ))}
+
                 </Box>
                 {totalPages > 1 && (
                     <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
