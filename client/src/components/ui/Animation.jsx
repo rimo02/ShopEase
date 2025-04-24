@@ -1,4 +1,4 @@
-import { useInView } from "../../hooks/useInView"
+import { UseInView } from "../../hooks/UseInView"
 import { cn } from "../../lib/utils";
 
 const Animation = ({
@@ -10,7 +10,7 @@ const Animation = ({
     rootMargin = "-50px"
 }) => {
 
-    const { ref, isInView } = useInView(threshold, rootMargin);
+    const { ref, isInView } = UseInView(threshold, rootMargin);
 
     return (
         <div

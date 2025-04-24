@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export function useInView(threshold, rootMargin) {
+export function UseInView(threshold, rootMargin) {
     const ref = useRef(null)
     const [isInView, setIsInView] = useState(false);
 
