@@ -13,7 +13,7 @@ function Layout() {
                 display: 'flex',
                 flexDirection: 'column',
                 overflowX: 'hidden',
-                bgcolor:"white  ",
+                bgcolor:"#F4F8FE67",
             }}
         >
             <Header />

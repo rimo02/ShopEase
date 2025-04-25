@@ -58,13 +58,16 @@ function Header() {
         justifyContent: 'space-between',
         height: '8vh',
         width: '100%',
-        bgcolor: 'rgba(0, 27, 57, 1)',
-        color: 'white',
+        bgcolor: '#34588FBC',
+        color: 'black',
         px: 2,
         position: 'fixed',
         top: 0,
-        zIndex: 1201,
+        zIndex: 10,
+        backdropFilter: 'blur(10px)',       
+        borderBottom: '1px solid rgba(255, 255, 255, 0.3)' 
       }}
+      
     >
       {/* Logo */}
       <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/')}>
