@@ -3,7 +3,7 @@ import axios from 'axios'
 export const signup = async ({ email, username, password }) => {
     try {
         console.log(email, username, password)
-        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}api/signup`, { email, username, password })
+        const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/signup`, { email, username, password })
         return res.data
     } catch (error) {
         throw error.error
