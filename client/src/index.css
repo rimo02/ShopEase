@@ -1,8 +1,13 @@
 @import "tailwindcss";
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: auto; 
+html,
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  background-color: #f4f0f0;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -15,6 +20,10 @@ html, body {
   to {
     opacity: 1;
   }
+}
+
+h1 {
+  color: #5962fc;
 }
 
 .animate-fade-in {

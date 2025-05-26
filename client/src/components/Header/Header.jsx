@@ -3,9 +3,8 @@ import {
   Container, TextField, Box, Button, Badge,
   Typography, Paper, FormGroup, FormControlLabel, Checkbox, Slider
 } from '@mui/material';
-import logo from '../../assets/shopping_website_logo.jpeg';
 import { ShoppingCart } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { calculateTotalQuantity } from '../../redux/slice/cartSlice';
 import debounce from 'lodash.debounce';
@@ -58,28 +57,21 @@ function Header() {
         justifyContent: 'space-between',
         height: '8vh',
         width: '100%',
-        bgcolor: '#34588FBC',
         color: 'black',
         px: 2,
         position: 'fixed',
         top: 0,
         zIndex: 10,
-        backdropFilter: 'blur(10px)',       
-        borderBottom: '1px solid rgba(255, 255, 255, 0.3)' 
+        backdropFilter: 'blur(10px)'
       }}
-      
+      className='border-b border-gray-300'
+
     >
       {/* Logo */}
       <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/')}>
-        <Box
-          component="img"
-          src={logo}
-          alt="logo"
-          sx={{
-            width: { xs: '70px', sm: '90px' },
-            height: 'auto'
-          }}
-        />
+        <Link to="/" className="flex items-center space-x-2">
+          <h1 className="text-2xl font-bold">ShopEase</h1>
+        </Link>
       </Box>
 
       {/* Search Field */}
@@ -138,7 +130,7 @@ function Header() {
           onClick={() => setMenuOpen(prev => !prev)}
           sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
         >
-          {menuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
+          {menuOpen ? <X size={24} color="black" /> : <Menu size={24} color="black" />}
         </Box>
       </Box>
 

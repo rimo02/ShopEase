@@ -38,9 +38,9 @@ function LandingPage() {
                 }}
             >
                 <Animation animation='slide-in-left'>
-                    <Typography variant="h3" component="h1" fontWeight="bold">
+                    <Typography variant="h3" component="h2" fontWeight="bold">
                         Best place to choose <br />
-                        your <Box component="span" sx={{ color: 'primary.main' }}>{categories[index]}</Box>.
+                        your <Box component="span" sx={{ color: '#5962fc' }}>{categories[index]}</Box>.
                     </Typography>
                     <Button
                         variant='contained'

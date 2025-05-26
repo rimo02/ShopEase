@@ -1,7 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
-import { Box, Paper, Typography, Divider, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import {
+  Grid,
+  Paper,
+  Typography,
+  Divider,
+  Button,
+  Box,
+} from '@mui/material';
 import CartCard from '../Items/CartCard';
 import { calculateTotalPrice } from '../../redux/slice/cartSlice.js';
 
@@ -9,7 +16,7 @@ function Cart() {
   const products = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(calculateTotalPrice());
@@ -18,29 +25,26 @@ function Cart() {
   return (
     <Box sx={{ p: 3 }}>
       {products && products.length > 0 ? (
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
-          <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 2, width: { xs: '100%', sm: '80%' } }}>
-            {products.map((product) => (
-              <Box
-                key={product.id}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 2,
-                }}
-              >
-                <CartCard
-                  name={product.name}
-                  price={product.price}
-                  url={product.url}
-                  id={product.id}
-                  qty={product.qty}
-                />
-              </Box>
-            ))}
-          </Box>
-          <Box sx={{ width: { xs: '100%', sm: '20%' } }}>
+        <Grid container spacing={2}>
+          {/* Left: Cart Items */}
+          <Grid item xs={12} sm={8}>
+            <Grid container spacing={2}>
+              {products.map((product) => (
+                <Grid item xs={12} key={product.id}>
+                  <CartCard
+                    name={product.name}
+                    price={product.price}
+                    url={product.url}
+                    id={product.id}
+                    qty={product.qty}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+
+          {/* Right: Order Summary */}
+          <Grid item xs={12} sm={4}>
             <Paper
               sx={{
                 p: 4,
@@ -53,14 +57,14 @@ function Cart() {
                 alignItems: 'flex-start',
               }}
             >
-              <Typography variant="h10" sx={{ fontWeight: 600 }}>
+              <Typography variant="h6" sx={{ fontWeight: 600 }}>
                 Order Summary
               </Typography>
               <Divider sx={{ my: 2 }} />
 
               {products.map((product) => (
                 <Typography key={product.id} variant="body2" sx={{ mt: 1 }}>
-                  {product.qty} x {product.name} - $
+                  {product.qty} x {product.name} - ${' '}
                   {(product.price * product.qty).toFixed(2)}
                 </Typography>
               ))}
@@ -72,14 +76,14 @@ function Cart() {
               </Typography>
               <Button
                 sx={{ color: 'white', bgcolor: 'green', mt: 1 }}
-                variant="h5"
+                variant="contained"
                 onClick={() => navigate('/checkout', { state: { totalPrice } })}
               >
                 Proceed to Checkout
               </Button>
             </Paper>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       ) : (
         <Typography variant="body1">Your cart is empty.</Typography>
       )}

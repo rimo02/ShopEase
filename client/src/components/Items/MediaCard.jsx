@@ -38,7 +38,7 @@ export default function MediaCard({ name, description, url, discount, price, cat
         <Card sx={{ width: 260, height: 380, boxShadow: 2, display: 'flex', flexDirection: 'column' }}>
             <CardMedia sx={{ height: 160 }} image={url} title={name} />
             <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="h1">
                     {truncateText(name.toLowerCase(), nameLimit)}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>

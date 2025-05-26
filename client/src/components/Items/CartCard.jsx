@@ -34,7 +34,7 @@ function CartCard({ name, url, price, id, qty }) {
         <Card sx={{ width: "100%", boxShadow: 2, display: "flex", flexDirection: "row", alignItems: "center", padding: 2, height: 160 }}>
             <CardMedia sx={{ width: "10%", height: '100%', objectFit: "cover" }} image={url} title={name} />
             <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', maxHeight: 300, overflow: 'auto' }}>
-                <Typography gutterBottom variant="h10" component="div">
+                <Typography gutterBottom variant="h10" component="h1">
                     {truncateText(name.toLowerCase())}
                 </Typography>
                 <Typography variant='h10' gutterBottom>
